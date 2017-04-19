@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Huts Reservation App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <base href="/">
+
+  </head>
+  <body>
+    <app-root>Loading...</app-root>
+    <script>
+      function initMap() {
+        var mapDiv = document.getElementById('map');
+        var huts = [{position: '', title: ''}];
+        //  created map
+      var map = new google.maps.Map(mapDiv, {
+          zoom: 8,
+          center: new google.maps.LatLng(24.819865, 66.9523288)
+      }); 
+
+        var myLatLng = {lat: 24.819865, lng: 66.9523288};
+
+      //add marker
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'Karachi'
+        });
+      
+      //marker created where clicked
+        map.addListener('click', function(e) {
+          let title = prompt('Enter location title');
+          placeMarkerAndPanTo(e.latLng, map, title);
+        });
+
+      function placeMarkerAndPanTo(latLng, map, title) {
+        var marker = new google.maps.Marker({
+          position: latLng,
+          map: map,
+          title: title
+        });
+        // map.panTo(latLng);
+
+        huts.push({position: JSON.stringify(marker.position), title: title});
+
+        for(var i = 0; i < huts.length; i++) {
+          console.log('----------------------------', huts[i].position);
+        }
+      }
+      }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_TcOrB6Q6ExyGXkqjvNp8Bf_fikMtzMM&callback=initMap"></script>
+  </body>
+</html>
